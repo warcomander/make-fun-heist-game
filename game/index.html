@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="data:,">
+<title>The Gilded Vault — a museum heist</title>
+<style>
+  html, body { margin: 0; height: 100%; overflow: hidden; background: #0b0d12; }
+  #game { position: fixed; inset: 0; width: 100%; height: 100%; display: block; touch-action: none; }
+  #hud { position: fixed; inset: 0; pointer-events: none; font-family: system-ui, -apple-system, "Segoe UI", sans-serif; color: #eef1f5; }
+  #topbar { position: absolute; top: 0; left: 0; right: 0; display: flex; gap: 14px; align-items: center; padding: 12px 16px; background: linear-gradient(rgba(5,6,10,0.72), rgba(5,6,10,0)); }
+  #topbar .pill { background: rgba(10,12,18,0.72); border: 1px solid rgba(255,255,255,0.14); border-radius: 999px; padding: 6px 12px; font-size: 13px; font-weight: 600; letter-spacing: 0.02em; white-space: nowrap; }
+  #alarmWrap { display: flex; align-items: center; gap: 8px; }
+  #alarmLabel { font-size: 12px; font-weight: 700; letter-spacing: 0.14em; color: #facc15; }
+  #alarmBar { width: 190px; height: 12px; border-radius: 999px; background: rgba(255,255,255,0.14); overflow: hidden; border: 1px solid rgba(255,255,255,0.18); }
+  #alarmFill { height: 100%; width: 0%; background: #22c55e; border-radius: 999px; transition: width 0.08s linear, background 0.2s; }
+  #objective { position: absolute; left: 16px; bottom: 14px; font-size: 13px; color: #d7dce6; background: rgba(10,12,18,0.66); border: 1px solid rgba(255,255,255,0.12); border-radius: 10px; padding: 8px 12px; max-width: 420px; line-height: 1.45; }
+  #controls { position: absolute; right: 16px; bottom: 14px; font-size: 12px; color: #9aa3b2; background: rgba(10,12,18,0.66); border: 1px solid rgba(255,255,255,0.12); border-radius: 10px; padding: 8px 12px; line-height: 1.55; text-align: right; }
+  #banner { position: absolute; top: 22%; left: 50%; transform: translateX(-50%); font-size: 44px; font-weight: 800; letter-spacing: 0.06em; color: #ff5a5a; text-shadow: 0 2px 18px rgba(0,0,0,0.8); display: none; }
+  #panel { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; background: rgba(5,6,10,0.58); }
+  #panel .card { max-width: 560px; margin: 0 20px; background: rgba(12,14,20,0.92); border: 1px solid rgba(201,162,39,0.45); border-radius: 16px; padding: 28px 32px; text-align: center; box-shadow: 0 18px 60px rgba(0,0,0,0.6); }
+  #panel h1 { margin: 0 0 6px; font-size: 34px; letter-spacing: 0.04em; color: #f2c94c; }
+  #panel h2 { margin: 0 0 10px; font-size: 15px; font-weight: 600; color: #d7dce6; letter-spacing: 0.08em; text-transform: uppercase; }
+  #panel p { margin: 8px 0; font-size: 14px; line-height: 1.6; color: #c6cdd9; }
+  #panel .keys { font-size: 13px; color: #9aa3b2; }
+  #panel .keys b { color: #eef1f5; }
+  #panel .cta { margin-top: 16px; font-size: 14px; font-weight: 700; color: #f2c94c; letter-spacing: 0.06em; }
+  #panel .score { font-size: 22px; font-weight: 800; color: #eef1f5; margin-top: 8px; }
+  #status { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+</style>
+</head>
+<body>
+<canvas id="game" aria-label="The Gilded Vault: a 3D museum heist. Steal the gold vault and reach the exit without being seen."></canvas>
+<div id="hud">
+  <div id="topbar">
+    <div id="alarmWrap"><span id="alarmLabel">ALARM</span><div id="alarmBar"><div id="alarmFill"></div></div></div>
+    <span class="pill" id="lootPill">💎 Loot: not taken</span>
+    <span class="pill" id="toolsPill">Q Noise ×2 &nbsp;·&nbsp; E EMP ×2</span>
+    <span class="pill" id="timePill">⏱ 0:00</span>
+  </div>
+  <div id="objective">Objective: slip past the guards and cameras, take the gold vault, then reach the green EXIT.</div>
+  <div id="controls">WASD / arrows — move<br>Q — throw noise maker &nbsp;·&nbsp; E — EMP the cameras<br>P — pause &nbsp;·&nbsp; Space — start / retry</div>
+  <div id="banner"></div>
+  <div id="panel"></div>
+</div>
+<p id="status" role="status" aria-live="polite"></p>
+<script src="./vendor/three.min.js"></script>
+<script type="module" src="./src/main.js"></script>
+</body>
+</html>
